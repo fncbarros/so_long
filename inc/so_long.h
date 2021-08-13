@@ -30,7 +30,10 @@ typedef struct	s_data{
 	int		*addr;
 	int		bpp;
 	int		line;
-	int		endian;
+	int		endian; /*bool n' cast?*/
+
+	int		w;
+	int		h;
 }	t_data;
 
 
