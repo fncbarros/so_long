@@ -78,22 +78,21 @@ int	main(void/*int argc, char **argv*/)
 	// t_object	img2;
 	t_data		img2;
 
-	img2.img.p = img_init(&img2); /*zero all data*/
 
 	mlx = mlx_init();
 	win.p = mlx_new_window(mlx, W_WIDTH, W_HEIGHT, "Window");
 
-	img2.img.w = 500;
-	img2.img.h = 500;
-	img2.img.p = mlx_new_image(mlx, img2.img.w, img2.img.h); /*Creating new image the same area of window n' malloc*/
+	img2.img.p = img_init(&img2); /*zero all data*/
+	img2.img.w = W_WIDTH;
+	img2.img.h = W_HEIGHT;
+	// img2.img.p = mlx_new_image(mlx, img2.img.w, img2.img.h); /*Creating new image the same area of window n' malloc*/
+	img2.img.p = mlx_xpm_file_to_image(mlx, "img/background.xpm", &img2.img.w, &img2.img.h);
 	img2.addr = (int *)mlx_get_data_addr(img2.img.p, &img2.bpp, &img2.line, &img2.endian); /*getting data from image but also mallocs(??)*/
-	/*bpp = 32 (bits), line = image width * 4 (in bytes), endian = 0*/
-	// printf("%d, %d, %d", img2.bpp, img2.line, img2.endian);
+	// mlx_xpm_to_image(mlx, )
 	
 
-	mlx_put_image_to_window(mlx, win.p, square->img.p, W_WIDTH / 3, W_HEIGHT / 10);
+	mlx_put_image_to_window(mlx, win.p, img2.img.p, 600, 400);
 	mlx_loop(mlx);
-	free(square);
 	// mlx_destroy_image(mlx, img2.p); /*free memory ??*/
 	// mlx_destroy_window(mlx, win.p); /*free memory ??*/
 }
