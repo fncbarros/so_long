@@ -5,7 +5,7 @@ SRCS = src/main.c
 OBJ = $(SRCS:c=o)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -Imlx -Iinc -c $< -o $@	#source files of mlx on a folder "mlx" inside root of project (where Makefile is)
+	$(CC) -g $(CFLAGS) -Imlx -Iinc -c $< -o $@	#source files of mlx on a folder "mlx" inside root of project (where Makefile is)
 
 all: $(NAME)
 

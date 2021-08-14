@@ -19,6 +19,9 @@
 
 //# include "libft.h"
 
+#define W_WIDTH 1920
+#define W_HEIGHT 1080
+
 typedef struct	s_object{
 	void	*p;
 	int		w;
@@ -26,22 +29,16 @@ typedef struct	s_object{
 }	t_object;
 
 typedef struct	s_data{
-	void	*p;
-	int		*addr;
-	int		bpp;
-	int		line;
-	int		endian; /*bool n' cast?*/
-
-	int		w;
-	int		h;
+	t_object	img;
+	int			*addr;
+	int			bpp;
+	int			line;
+	int			endian; /*bool n' cast?*/
 }	t_data;
 
-
-// typedef struct	s_img{
-// 	void	*img;
-// 	int		w;
-// 	int		h;
-// }	t_img;
+int		ft_offset(int x, int y, const t_data data);
+void	ft_img_pixel_put(t_data *img, int color, int x, int y);
+/*Both set to deal with int * addresses*/
 
 
 #endif
