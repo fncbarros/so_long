@@ -14,8 +14,10 @@
 # define SO_LONG_H
 
 # include <stdio.h>
+# include <stdlib.h>
 # include <string.h>
 # include <mlx.h>
+# include <fcntl.h>
 
 # include "libft.h"
 # include "get_next_line.h"
@@ -40,6 +42,6 @@ typedef struct	s_data{
 int		ft_offset(int x, int y, const t_data data);
 void	ft_img_pixel_put(t_data *img, int color, int x, int y);
 /*Both set to deal with int * addresses*/
-
+void	*img_init(t_data *img);
 
 #endif

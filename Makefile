@@ -3,7 +3,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 SRCS = src/main.c
 OBJ = $(SRCS:c=o) $(GNL:c=o)
-GNL = get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
+GNL = get_next_line/get_next_line.c
 LIBFT = libft.a
 
 %.o: %.c
@@ -19,10 +19,12 @@ $(LIBFT):
 	cp libft/libft.a .
 
 clean:
+	$(MAKE) clean -C libft
 	rm -f $(OBJ)
 
 fclean: clean
-	rm -f $(NAME) 
+	make fclean -C libft
+	rm -f $(NAME) $(LIBFT)
 
 re: fclean all
 
