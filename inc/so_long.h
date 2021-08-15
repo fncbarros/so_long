@@ -6,7 +6,7 @@
 /*   By: fbarros <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 17:53:17 by fbarros           #+#    #+#             */
-/*   Updated: 2021/08/11 18:29:35 by fbarros          ###   ########.fr       */
+/*   Updated: 2021/08/15 15:39:00 by fbarros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 # include <string.h>
 # include <mlx.h>
 
-//# include "libft.h"
+# include "libft.h"
+# include "get_next_line.h"
 
 #define W_WIDTH 1920
 #define W_HEIGHT 1080
