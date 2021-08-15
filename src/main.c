@@ -35,7 +35,7 @@ Needs error handling and adding \n maybe*/
 	{
 //		line = ft_strjoin(line, "\n");
 		tmp2 = line;
-		line = ft_strjoin(line, tmp);
+		line = ft_strjoin(tmp2, tmp);
 		free(tmp2);
 		free(tmp);
 		*y += 1;
