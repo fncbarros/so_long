@@ -22,8 +22,10 @@
 # include "libft.h"
 # include "get_next_line.h"
 
-#define W_WIDTH 1920
+#define W_WIDTH 1920 //Both dependent on map and asset size
 #define W_HEIGHT 1080
+
+/*---------->NEED REDO STRUCTS<------------*/
 
 typedef struct	s_object{
 	void	*p;
@@ -39,12 +41,21 @@ typedef struct	s_data{
 	int			endian; /*bool n' cast?*/
 }	t_data;
 
+typedef struct	s_elements{
+	t_data	background;
+	t_data	wall; //??
+	t_data	character;
+	t_data	collect;
+	//...
+}	t_elements;
+
 int		ft_offset(int x, int y, const t_data data);
 void	ft_img_pixel_put(t_data *img, int color, int x, int y);
 /*Both set to deal with int * addresses*/
 void	*img_init(t_data *img);
 
-void	paint_window(void *mlx, void *win, const int w, const int h);
 char	*read_map(char *map, int *x, int *y);
+void	build_map(void *mlx, const char *map, t_elements *g);
+void	paint_window(t_data *img, const int w, const int h);
 
 #endif

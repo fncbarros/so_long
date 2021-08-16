@@ -13,18 +13,15 @@
 
 #include "../inc/so_long.h"
 
-void	paint_window(void *mlx, void *win, const int w, const int h)
+void	paint_window(t_data *img, const int w, const int h)
+/*Painting the whole window to cover asset background
+4743554*/
 {
-	int	x;
-	int	y;
+	int	z;
 
-	y = -1;
-	while (++y < h)
-	{
-		x = -1;
-		while (++x < w)
-			mlx_pixel_put(mlx, win, x, y, 4743554);
-	}
+    z = -1;
+	while (++z < (w * h))
+		img->addr[z] = 4743554;
 }
 
 char	*read_map(char *map, int *x, int *y)
@@ -64,7 +61,14 @@ Needs error handling and adding \n maybe...but maybe not
 	return (line);
 }
 
-void    build_map()
-{
+/*put images to window(void *mlx, void *win, t_elements *g)
+	*/
 
+void	build_map(void *mlx, const char *map, t_elements *g)
+{
+	(void)map;
+	g->background.img.p = mlx_new_image(mlx, g->background.img.w, g->background.img.h);
+	g->background.addr = (int *)mlx_get_data_addr(g->background.img.p, &g->background.bpp, 
+			&g->background.line, &g->background.endian);
+	paint_window(&g->background, g->background.img.w, g->background.img.h);
 }
