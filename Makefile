@@ -1,7 +1,7 @@
 NAME = so_long
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-SRCS = src/main.c
+SRCS = src/main.c src/map.c src/utils.c
 OBJ = $(SRCS:c=o) $(GNL:c=o)
 GNL = get_next_line/get_next_line.c
 LIBFT = libft.a

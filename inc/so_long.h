@@ -44,4 +44,7 @@ void	ft_img_pixel_put(t_data *img, int color, int x, int y);
 /*Both set to deal with int * addresses*/
 void	*img_init(t_data *img);
 
+void	paint_window(void *mlx, void *win, const int w, const int h);
+char	*read_map(char *map, int *x, int *y);
+
 #endif
