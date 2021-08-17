@@ -16,6 +16,19 @@
     perror("Error");
 */
 
+void	*malloc_n_check(size_t block, void *element)
+{
+	void	*p;
+
+    (void)element;
+	p = malloc(block);
+	if (!p)
+		display_err();
+    return (p);
+}
+
+
+
 void	display_err()
 {
     exit(1);

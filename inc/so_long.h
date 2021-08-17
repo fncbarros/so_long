@@ -27,6 +27,18 @@
 
 /*---------->NEED REDO STRUCTS<------------*/
 
+/*----------PROTO--------------*/
+typedef union s_creation
+/*for error management purposes
+	*/
+{
+	int(*mlx_put_image_to_window)(void *mlx_ptr, void *win_ptr, void  *img_ptr,
+       int x, int y);
+	void*(**mlx_new_image)( void *mlx_ptr, int width, int height);
+}	t_creation;
+
+/*----------PROTO--------------*/
+
 typedef struct	s_object{
 	void	*p;
 	int		w;
@@ -42,12 +54,16 @@ typedef struct	s_data{
 }	t_data;
 
 typedef struct	s_elements{
-	t_data	background;
-	t_data	wall; //??
-	t_data	character;
-	t_data	collect;
+	void		*mlx;
+	t_object	win;
+	t_data		background;
+	t_data		wall; //??
+	t_data		character; //need to know current position
+	t_data		collect;
 	//...
 }	t_elements;
+
+void	display_err(void);
 
 int		ft_offset(int x, int y, const t_data data);
 void	ft_img_pixel_put(t_data *img, int color, int x, int y);
