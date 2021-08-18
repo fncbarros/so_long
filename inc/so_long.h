@@ -32,35 +32,42 @@ typedef union s_creation
 /*for error management purposes
 	*/
 {
-	int(*mlx_put_image_to_window)(void *mlx_ptr, void *win_ptr, void  *img_ptr,
-       int x, int y);
-	void*(**mlx_new_image)( void *mlx_ptr, int width, int height);
+	int		(*mlx_put_image_to_window)(void *mlx_ptr, void *win_ptr, void  *img_ptr, 
+				int x, int y);
+	void	*(**mlx_new_image)( void *mlx_ptr, int width, int height); //???????
 }	t_creation;
 
 /*----------PROTO--------------*/
 
-typedef struct	s_object{
+
+typedef struct	s_data{
 	void	*p;
 	int		w;
 	int		h;
-}	t_object;
-
-typedef struct	s_data{
-	t_object	img;
-	int			*addr;
-	int			bpp;
-	int			line;
-	int			endian; /*bool n' cast?*/
+	int		*addr;
+	int		bpp;
+	int		line;
+	int		endian; /*bool n' cast?*/
 }	t_data;
+
+typedef struct	s_map{
+	int	**addr;
+	int	rows;
+	int	columns;
+	int	C;
+}	t_map;
 
 typedef struct	s_elements{
 	void		*mlx;
-	t_object	win;
+	void		*win_p;
+	int			win_w;
+	int			win_h;
+	t_map		map;
 	t_data		background;
-	t_data		wall; //??
-	t_data		character; //need to know current position
+	t_data		wall;
+	t_data		character;
 	t_data		collect;
-	//...
+	t_data		E;
 }	t_elements;
 
 void	display_err(void);
@@ -68,10 +75,10 @@ void	display_err(void);
 int		ft_offset(int x, int y, const t_data data);
 void	ft_img_pixel_put(t_data *img, int color, int x, int y);
 /*Both set to deal with int * addresses*/
-void	*img_init(t_data *img);
+void	*img_init(t_elements *g);
 
 char	*read_map(char *map, int *x, int *y);
-void	build_map(void *mlx, const char *map, t_elements *g);
+void	build_map(char *m_path, t_elements *g);
 void	paint_window(t_data *img, const int w, const int h);
 
 #endif

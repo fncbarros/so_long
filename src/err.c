@@ -27,9 +27,13 @@ void	*malloc_n_check(size_t block, void *element)
     return (p);
 }
 
-
-
 void	display_err()
 {
     exit(1);
+}
+
+void    err_check(void *element)
+{
+    if (element == NULL)
+        display_err(something...)
 }
