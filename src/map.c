@@ -12,13 +12,31 @@
 
 #include "../inc/so_long.h"
 
-char	*read_map(char *map, t_map *m)
+int	read_map(char *map, t_map *m)
 /*-------------------------->LEAKING! REMAKE IT!! <-----------------------------
 Stores map in char *map, no of elements in the x axis and y axis in x and y (passed by reference)
 Needs error handling and adding \n maybe...but maybe not
 */
 {
-	return(NULL);
+	int	r;
+	int	fd;
+
+	m->rows = -1;
+	r = 1;
+
+	fd = open(map, O_RDONLY);
+	while (++m->rows && r > 0)
+	{
+		if (m->rows == 1)
+			m->columns = ft_strlen(m->addr[0]);
+		r = get_next_line(fd, &m->addr[m->rows]);
+		if (r > 0 && ft_strlen(m->addr[m->rows]) != m->columns)
+			r = -1;
+	}
+	if (r == -1)
+		return (clear_map(m->addr));
+	m->addr[m->rows] = 0;
+	return (m->rows--);
 }
 
 /*put images to window(void *mlx, void *win, t_elements *g)
@@ -36,7 +54,7 @@ void	build_map(char *m_path, t_elements *g)
 
 
 	g->background.p = mlx_new_image(g->mlx, g->background.w, g->background.h);
-	g->background.addr = (int *)mlx_get_data_addr(g->background.p, &g->background.bpp, 
+	g->background.addr = (int *)mlx_get_data_addr(g->background.p, &g->background.bpp,
 			&g->background.line, &g->background.endian);
 	paint_window(&g->background, g->background.w, g->background.h);
 }

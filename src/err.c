@@ -37,3 +37,9 @@ void    err_check(void *element)
     if (element == NULL)
         display_err(something...)
 }
+
+int    clear_map(char **map)
+{
+    while (*map)
+        free(*map++);
+}
