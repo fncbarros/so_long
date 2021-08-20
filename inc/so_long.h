@@ -18,6 +18,7 @@
 # include <string.h>
 # include <mlx.h>
 # include <fcntl.h>
+# include <errno.h>
 
 # include "libft.h"
 # include "get_next_line.h"
@@ -72,15 +73,18 @@ typedef struct	s_elements{
 	t_data		E;
 }	t_elements;
 
-void	display_err(void);
+/*err.c*/
+void	display_err(int num);
 int		clear_map(char **map);
+void	*malloc_n_check(size_t block, void *content);
 
+/*utils.c*/
 int		ft_offset(int x, int y, const t_data data);
 void	ft_img_pixel_put(t_data *img, int color, int x, int y);
-/*Both set to deal with int * addresses*/
 void	*img_init(t_elements *g);
 
-int	read_map(char *map, t_map *m);
+/*map.c*/
+int		read_map(char *map, t_map *m);
 void	build_map(char *m_path, t_elements *g);
 void	paint_window(t_data *img, const int w, const int h);
 

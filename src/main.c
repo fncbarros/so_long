@@ -42,11 +42,11 @@ W_WIDTH/W_HEIGHT dependent on map and asset sizes.......*/
 	t_elements	g;
 
 	if (argc < 2)
-		exit(0); //DISPLAY ERROR <----------
+		display_err(2); //DISPLAY ERROR <----------
 	g.mlx = mlx_init();
 
 	if (!read_map(argv[1], &g.map))
-		return (0); //DISPLAY ERROR
+		display_err(0); //DISPLAY ERROR
 	// build_map(argv[1], &g); //presumably sending every image to screen
 
 

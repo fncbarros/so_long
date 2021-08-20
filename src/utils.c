@@ -42,14 +42,14 @@ void	*img_init(t_elements *g)
 	g->win_p = NULL;
 	g->win_h = 0;
 	g->win_w = 0;
-	*g->map.addr = 1; //NULL
+	// *(g->map.addr) = 0;
 	g->map.C = 0;
 	g->map.columns = 0;
-	g->map.rows = 0;
+	g->map.rows = -1;
 	init_data(&g->background);
 	init_data(&g->wall);
 	init_data(&g->character);
 	init_data(&g->collect);
 	init_data(&g->E);
-	return (NULL);
+	return (NULL); //??
 }
