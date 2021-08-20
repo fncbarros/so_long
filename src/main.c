@@ -32,7 +32,7 @@
 		Requires printing images for each action
 
 	alloc for map only
-
+	
 */
 
 int	main(int argc, char **argv)

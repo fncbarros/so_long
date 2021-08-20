@@ -16,15 +16,22 @@
     perror("Error");
 */
 
-void	*malloc_n_check(size_t block, void *content)
+void	*malloc_n_check(size_t block, void *content, int flag)
+/*Not sure if useful
+flag in case there's memory to free*/
 {
 	void	*p;
 
-     (void)content;
-	p = malloc(block);
-    // *p = content; //memcpy ??
+	p = ft_calloc(1, block);
 	if (!p)
-		display_err(errno);
+    {
+        if (flag)
+		    return (NULL);
+        else
+            display_err(0);
+    }
+    if (content)
+        ft_memcpy(p, content, block);
     return (p);
 }
 
@@ -37,7 +44,7 @@ void	display_err(int num)
         ft_putstr_fd("Failed to read map.\n", 2);
     else if (num == 2)
         ft_putstr_fd("Missing *.ber file.\n", 2);
-    // exit(1);
+    exit(1);
 }
 /*
 void    err_check(void *element)
@@ -52,6 +59,7 @@ int    clear_map(char **map)
     {
         while (*map)
             free(*map++);
+        free(map);
     }
     return(0);
 }

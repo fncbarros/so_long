@@ -25,21 +25,23 @@ Needs error handling and adding \n maybe...but maybe not
 	r = 1;
 	fd = open(map, O_RDONLY);
 	if (fd < 0)
+		display_err(0); //or perror(strerror(errno)); exit(1);
+	m->addr = malloc_n_check(sizeof(char **), 0, 0);
+	while (r > 0)
 	{
-		perror(strerror(errno));
-		display_err(errno);
-	}
-	while (++m->rows && r > 0)
-	{
-		if (m->rows == 1)
+		if (++m->rows == 1)
 			m->columns = ft_strlen(m->addr[0]);
 		r = get_next_line(fd, &m->addr[m->rows]);
-		if (r > 0 && ft_strlen(m->addr[m->rows]) != (size_t)m->columns)
+		if (m->columns > 0 && ft_strlen(m->addr[m->rows]) != (size_t)m->columns)
+			r = -1;
+		else
+			m->addr = (char **)ft_realloc(m->addr, (m->rows + 1) * sizeof(char *)); //not gonna work
+		if (!m->addr)
 			r = -1;
 	}
+	*(m->addr + m->rows) = 0;
 	if (r == -1)
 		display_err(clear_map(m->addr));
-	// *(m->addr + m->rows) = 0;
 	close(fd);
 	return (m->rows--); //return(check(map)) should return err number or something else in case of success??
 }
@@ -67,9 +69,7 @@ int	main(int argc, char **argv)
 
 
 	if (argc < 2)
-	{
 		display_err(2); //DISPLAY ERROR <----------
-	}
 
 
 	// /*----------------TEST-------------------*/
@@ -100,39 +100,5 @@ int	main(int argc, char **argv)
 		total += ft_strlen(g.map.addr[i]);
 	}
 	printf("%d x %d == %d", g.map.columns, g.map.rows, total);
+	clear_map(g.map.addr);
 }
-
-
-/*
-	char	*read_map(char *map, int *x, int *y)
-
-	int		fd;
-	char	*line;
-	char	*tmp;
-	char	*tmp2;
-	int		r;
-
-	*y = 1;
-	tmp = NULL;
-	fd = open(map, O_RDONLY);
-	if ( 1 > get_next_line(fd, &line))
-		return (NULL);
-	*x = ft_strlen(line);
-	r = *x;
-	while ( r > 0)
-	{
-		 r = get_next_line(fd, &tmp);
-//		line = ft_strjoin(line, "\n");
-		tmp2 = strdup(line);
-		free(line);
-		line = ft_strjoin(tmp2, tmp);
-		free(tmp2);
-		*y += 1;
-		if (r == *x)
-			free(tmp);
-	}
-	line = ft_strjoin(line, tmp);
-	//  free(line);
-	// printf("%s", line);
-	close(fd);
-	return (line);*/

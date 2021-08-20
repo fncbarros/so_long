@@ -76,7 +76,7 @@ typedef struct	s_elements{
 /*err.c*/
 void	display_err(int num);
 int		clear_map(char **map);
-void	*malloc_n_check(size_t block, void *content);
+void	*malloc_n_check(size_t block, void *content, int flag);
 
 /*utils.c*/
 int		ft_offset(int x, int y, const t_data data);
