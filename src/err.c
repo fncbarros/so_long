@@ -59,7 +59,7 @@ int    clear_map(char **map)
     {
         while (*map)
             free(*map++);
-        free(map);
+        // free(map);
     }
     return(0);
 }

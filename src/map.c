@@ -22,13 +22,13 @@ static char	**two_dimension_realloc(char ***p_arr, int size)
 	// tmp = malloc(sizeof(char **) * (size + 1);
 	tmp2 = *p_arr;
 	tmp = ft_calloc(size + 1, sizeof(char **));
-	tmp[size] = NULL;
+	// tmp[size] = NULL;
 	if (!tmp)
 		display_err(clear_map(*p_arr));
-	while (tmp2[++i] && i <= size)
+	while (tmp2[++i] && i < size)
 		tmp[i] = tmp2[i]/**p_arr[i]*/;
-	// free(*p_arr);
-	free(tmp2);
+	tmp[i] = NULL;
+	free(*p_arr);
 	return (tmp);
 }
 
@@ -47,7 +47,7 @@ Needs error handling and adding \n maybe...but maybe not
 	if (fd < 0)
 		display_err(0); //or perror(strerror(errno)); exit(1);
 	m->addr = malloc_n_check(sizeof(char **) * 2, 0, 0);
-	// m->addr[1] = 0;
+	m->addr[1] = 0;
 	while (r > 0)
 	{
 		if (++m->rows == 1)
@@ -62,11 +62,10 @@ Needs error handling and adding \n maybe...but maybe not
 		if (!m->addr)
 			r = -1;
 	}
-	// *(m->addr + m->rows) = 0;
 	if (r == -1)
 		display_err(clear_map(m->addr));
 	close(fd);
-	return (m->rows--); //return(check(map)) should return err number or something else in case of success??
+	return (m->rows); //return(check(map)) should return err number or something else in case of success??
 }
 
 /*put images to window(void *mlx, void *win, t_elements *g)
