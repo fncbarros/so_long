@@ -35,6 +35,7 @@ Needs error handling and adding \n maybe...but maybe not
 		if (m->columns > 0 && ft_strlen(m->addr[m->rows]) != (size_t)m->columns)
 			r = -1;
 		else
+		/*Need buffer to */
 			m->addr = (char **)ft_realloc(m->addr, (m->rows + 1) * sizeof(char *)); //not gonna work
 		if (!m->addr)
 			r = -1;
@@ -63,13 +64,13 @@ void	build_map(char *m_path, t_elements *g)
 }
 
 
-int	main(int argc, char **argv)
-{
-	t_elements	g;
+// int	main(int argc, char **argv)
+// {
+// 	t_elements	g;
 
 
-	if (argc < 2)
-		display_err(2); //DISPLAY ERROR <----------
+// 	if (argc < 2)
+// 		display_err(2); //DISPLAY ERROR <----------
 
 
 	// /*----------------TEST-------------------*/
@@ -90,15 +91,16 @@ int	main(int argc, char **argv)
 	// /*----------------TEST-------------------*/
 
 
-	img_init(&g);
-	printf("%d\n", read_map(argv[1], &g.map));
-	int i = -1;
-	int total = 0;
-	while (g.map.addr[++i])
-	{
-		printf("%s\n", g.map.addr[i]);
-		total += ft_strlen(g.map.addr[i]);
-	}
-	printf("%d x %d == %d", g.map.columns, g.map.rows, total);
-	clear_map(g.map.addr);
-}
+// 	img_init(&g);
+// 	printf("%d\n", read_map(argv[1], &g.map));
+// 	int i = -1;
+// 	int total = 0;
+// 	while (g.map.addr[++i])
+// 	{
+// 		printf("%s\n", g.map.addr[i]);
+// 		total += ft_strlen(g.map.addr[i]);
+// 	}
+// 	printf("%d x %d == %d", g.map.columns, g.map.rows, total);
+// 	clear_map(g.map.addr);
+// }
+

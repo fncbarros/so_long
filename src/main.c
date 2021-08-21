@@ -32,7 +32,7 @@
 		Requires printing images for each action
 
 	alloc for map only
-	
+
 */
 
 int	main(int argc, char **argv)
@@ -85,4 +85,5 @@ W_WIDTH/W_HEIGHT dependent on map and asset sizes.......*/
 	// free (g.map.addr); //free_map(g.map.addr)
 	// mlx_destroy_image(g.mlx, g.background.p); /*free memory ??*/
 	// mlx_destroy_window(g.mlx, g.win_p); /*free memory ??*/
+	return (0);
 }

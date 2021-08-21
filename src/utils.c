@@ -53,3 +53,9 @@ void	*img_init(t_elements *g)
 	init_data(&g->E);
 	return (NULL); //??
 }
+/*
+void	*ft_reallocate()
+{
+
+}
+*/

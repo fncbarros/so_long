@@ -19,3 +19,5 @@ PSEUDO (or blueprint rather):
 	build keyhooks (WASD, ESC, red cross button, need free all memory in such cases)
 		Actions: movement, collecting and exiting
 		Requires printing images for each action
+
+All image addresses dealt as int pointers/arrays
