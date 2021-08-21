@@ -55,11 +55,14 @@ void    err_check(void *element)
 */
 int    clear_map(char **map)
 {
+    char    **tmp;
+
+    tmp = map;
     if (*map)
     {
         while (*map)
             free(*map++);
-        // free(map);
+        free(tmp);
     }
     return(0);
 }

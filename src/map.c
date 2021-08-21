@@ -65,7 +65,7 @@ Needs error handling and adding \n maybe...but maybe not
 	if (r == -1)
 		display_err(clear_map(m->addr));
 	close(fd);
-	return (m->rows); //return(check(map)) should return err number or something else in case of success??
+	return (m->rows++); //return(check(map)) should return err number or something else in case of success??
 }
 
 /*put images to window(void *mlx, void *win, t_elements *g)
