@@ -13,7 +13,15 @@
 #include "../inc/so_long.h"
 
 static int	element_control(char c)
-/*Stupid-ass function but I'm proud of it*/
+/*Very sloppy implementation but the intention was good.
+ So this serves as an auxiliary to the map scanning function, returning one of three values:
+ 	- A number less than 69 (ascii for E) in case it detects a certain failure (if there's more than one P or E element 
+	or anything else than "01PCE")". In such case it will return the error id (see display_err() in err.c);
+	- pe in case if finds an 'E' or 'P' element for the first time. pe should be equal to
+	the bit representation of 'P' followed by 'E' (hence the name) once the map(see "parent" function)
+	has been totally scanned.
+	I use an '^' or XOR operand to make sure there's no more, no less than one instance of both chars.
+*/
 {
 	static int	pe;
 
@@ -21,24 +29,25 @@ static int	element_control(char c)
 	{
 		pe ^= 'E';
 		if (!pe)
-			return(0);
+			return(3);
 	}
 	else if (c == 'P')
 	{
 		pe ^= 'P' << 8;
 		if (!pe >> 8)
-			return (0);
+			return (3);
 	}
 	else if (!ft_strchr("01C", c))
-		return (0);
+		return (6);
 	else if (pe == 0)
-		return (1);
+		return ('E');
 	return (pe);
 }
 
 static void	further_check(t_map *m)
-/*Need check if theres 1+ E or P
-   or just overwrite decision deleting one-a-them*/
+/*Overwrite > 1 'E' or 'P' deleting one-a-them ???
+	Accept lower case elements ?? (toupper)
+ Checks if map is rectangular and outterbounds are filled with 1's.*/
 {
 	int	i;
 	int	j;
@@ -49,17 +58,17 @@ static void	further_check(t_map *m)
 	{
 		j = 0;
 		if (m->addr[0][i] != '1' || m->addr[m->rows - 1][i] != '1')
-			display_err(clear_map(m->addr) + 1);
+			display_err(clear_map(m->addr) + 5);
 		while (++j < m->rows)
 		{
 			if (i == 0 || i == (m->columns - 1))
 			{
 				if (m->addr[j][i] != '1')
-					display_err(clear_map(m->addr) + 1);
+					display_err(clear_map(m->addr) + 5);
 			}
 			pe = element_control(m->addr[j][i]);
-			if (!pe)
-				display_err(clear_map(m->addr) + 3);
+			if (pe < 69)
+				display_err(clear_map(m->addr) + pe);
 		}
 	}
 	if (pe != ('P' << 8) + 'E')
@@ -67,6 +76,7 @@ static void	further_check(t_map *m)
 }
 
 static char	**two_dimension_realloc(char ***p_arr, int size)
+/*Allways sets last double pointer to NULL*/
 {
 	char	**tmp;
 	char	**tmp2;
@@ -79,7 +89,7 @@ static char	**two_dimension_realloc(char ***p_arr, int size)
 	if (size > 1)
 	{
 		if (!tmp)
-			display_err(clear_map(*p_arr));
+			display_err(clear_map(*p_arr) + 1);
 		while (tmp2[++i] && i < size)
 			tmp[i] = tmp2[i];
 		tmp[i] = NULL;
@@ -101,7 +111,7 @@ Malloc'ing empty line instead of setting to NULL <----------------------- FIXIT
 	r = 1;
 	fd = open(map, O_RDONLY);
 	if (fd < 0)
-		display_err(0);
+		display_err(1);
 	while (r > 0)
 	{
 		m->addr = two_dimension_realloc(&m->addr, (++m->rows) + 1);
@@ -110,11 +120,11 @@ Malloc'ing empty line instead of setting to NULL <----------------------- FIXIT
 		r = get_next_line(fd, &m->addr[m->rows]);
 		if (m->columns > 0 && r &&
 			ft_strlen(m->addr[m->rows]) != (size_t)m->columns)
-			r = -1;
+			r = -4;
 	}
 	close(fd);
-	if (r == -1)
-		display_err(clear_map(m->addr) + 1);
+	if (r < 0)
+		display_err(clear_map(m->addr) + (r * -1));
 	m->rows++;
 	further_check(m);
 }
