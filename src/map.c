@@ -12,19 +12,43 @@
 
 #include "../inc/so_long.h"
 
+static int	element_control(char c)
+/*Stupid-ass function but I'm proud of it*/
+{
+	static int	pe;
+
+	if (c == 'E')
+	{
+		pe ^= 'E';
+		if (!pe)
+			return(0);
+	}
+	else if (c == 'P')
+	{
+		pe ^= 'P' << 8;
+		if (!pe >> 8)
+			return (0);
+	}
+	else if (!ft_strchr("01C", c))
+		return (0);
+	else if (pe == 0)
+		return (1);
+	return (pe);
+}
+
 static void	further_check(t_map *m)
 /*Need check if theres 1+ E or P
    or just overwrite decision deleting one-a-them*/
 {
 	int	i;
 	int	j;
+	static int	pe;
 
 	i = -1;
-	j = 0;
 	while (++i < (m->columns))
 	{
-		if (m->addr[0][i] != '1' ||
-			m->addr[m->rows - 1][i] != '1')
+		j = 0;
+		if (m->addr[0][i] != '1' || m->addr[m->rows - 1][i] != '1')
 			display_err(clear_map(m->addr) + 1);
 		while (++j < m->rows)
 		{
@@ -33,11 +57,13 @@ static void	further_check(t_map *m)
 				if (m->addr[j][i] != '1')
 					display_err(clear_map(m->addr) + 1);
 			}
-			else if (!ft_strchr("01PCE", m->addr[j][i]))
-					display_err(clear_map(m->addr) + 1);
+			pe = element_control(m->addr[j][i]);
+			if (!pe)
+				display_err(clear_map(m->addr) + 3);
 		}
-		j = 0;
 	}
+	if (pe != ('P' << 8) + 'E')
+		display_err(clear_map(m->addr) + 3);
 }
 
 static char	**two_dimension_realloc(char ***p_arr, int size)
@@ -78,7 +104,7 @@ Malloc'ing empty line instead of setting to NULL <----------------------- FIXIT
 		display_err(0);
 	while (r > 0)
 	{
-		m->addr = two_dimension_realloc(&m->addr, ++m->rows + 1);
+		m->addr = two_dimension_realloc(&m->addr, (++m->rows) + 1);
 		if (m->rows == 1)
 			m->columns = ft_strlen(m->addr[0]);
 		r = get_next_line(fd, &m->addr[m->rows]);
@@ -89,6 +115,7 @@ Malloc'ing empty line instead of setting to NULL <----------------------- FIXIT
 	close(fd);
 	if (r == -1)
 		display_err(clear_map(m->addr) + 1);
+	m->rows++;
 	further_check(m);
 }
 
