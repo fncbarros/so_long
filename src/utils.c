@@ -48,8 +48,8 @@ void	*img_init(t_elements *g)
 	g->map.rows = -1;
 	init_data(&g->background);
 	init_data(&g->wall);
-	init_data(&g->character);
-	init_data(&g->collect);
+	init_data(&g->P);
+	init_data(&g->C);
 	init_data(&g->E);
 	return (NULL); //??
 }

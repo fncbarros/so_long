@@ -82,8 +82,8 @@ W_WIDTH/W_HEIGHT dependent on map and asset sizes.......*/
 	// mlx_put_image_to_window(g.mlx, g.win_p, g.wall.p, x, y);
 
 	// mlx_loop(g.mlx);
-	// free (g.map.addr); //free_map(g.map.addr)
 	// mlx_destroy_image(g.mlx, g.background.p); /*free memory ??*/
 	// mlx_destroy_window(g.mlx, g.win_p); /*free memory ??*/
+	clear_map(g.map.addr);
 	return (0);
 }

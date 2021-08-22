@@ -12,6 +12,34 @@
 
 #include "../inc/so_long.h"
 
+static void	further_check(t_map *m)
+/*Need check if theres 1+ E or P
+   or just overwrite decision deleting one-a-them*/
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	j = 0;
+	while (++i < (m->columns))
+	{
+		if (m->addr[0][i] != '1' ||
+			m->addr[m->rows - 1][i] != '1')
+			display_err(clear_map(m->addr) + 1);
+		while (++j < m->rows)
+		{
+			if (i == 0 || i == (m->columns - 1))
+			{
+				if (m->addr[j][i] != '1')
+					display_err(clear_map(m->addr) + 1);
+			}
+			else if (!ft_strchr("01PCE", m->addr[j][i]))
+					display_err(clear_map(m->addr) + 1);
+		}
+		j = 0;
+	}
+}
+
 static char	**two_dimension_realloc(char ***p_arr, int size)
 {
 	char	**tmp;
@@ -19,7 +47,6 @@ static char	**two_dimension_realloc(char ***p_arr, int size)
 	int		i;
 
 	i = -1;
-	// tmp = malloc(sizeof(char **) * (size + 1);
 	tmp2 = *p_arr;
 	tmp = ft_calloc(size + 1, sizeof(char **));
 	tmp[size] = NULL;
@@ -37,11 +64,9 @@ static char	**two_dimension_realloc(char ***p_arr, int size)
 	return (tmp);
 }
 
-int	read_map(char *map, t_map *m)
-/*-------------------------->LEAKING! REMAKE IT!! <-----------------------------
-Stores map in char *map, no of elements in the x axis and y axis in x and y (passed by reference)
-Needs error handling and adding \n maybe...but maybe not
-----> NEED TO (FT_)REALLOC for char **
+static void	read_map(char *map, t_map *m)
+/*Stores map in 2d array char **addr; reallocs (sorta)
+Malloc'ing empty line instead of setting to NULL <----------------------- FIXIT
 */
 {
 	int	r;
@@ -50,30 +75,21 @@ Needs error handling and adding \n maybe...but maybe not
 	r = 1;
 	fd = open(map, O_RDONLY);
 	if (fd < 0)
-		display_err(0); //or perror(strerror(errno)); exit(1);
-	// m->addr = malloc_n_check(sizeof(char **) * 2, 0, 0);
-	// m->addr[1] = 0;
+		display_err(0);
 	while (r > 0)
 	{
 		m->addr = two_dimension_realloc(&m->addr, ++m->rows + 1);
 		if (m->rows == 1)
 			m->columns = ft_strlen(m->addr[0]);
 		r = get_next_line(fd, &m->addr[m->rows]);
-		if (m->columns > 0 && ft_strlen(m->addr[m->rows]) != (size_t)m->columns)
+		if (m->columns > 0 && r &&
+			ft_strlen(m->addr[m->rows]) != (size_t)m->columns)
 			r = -1;
-		// else
-		/*Need buffer to */
-			// m->addr = (char **)ft_realloc(m->addr, (m->rows + 1) * sizeof(char *)); //not gonna work
-		// if (!m->addr)
-			// display_err(clear_map(m->addr));
 	}
 	close(fd);
 	if (r == -1)
-		{
-			clear_map(m->addr);
-			display_err(1);
-		}
-	return (m->rows++); //return(check(map)) should return err number or something else in case of success??
+		display_err(clear_map(m->addr) + 1);
+	further_check(m);
 }
 
 /*put images to window(void *mlx, void *win, t_elements *g)
@@ -81,15 +97,26 @@ Needs error handling and adding \n maybe...but maybe not
 
 void	build_map(char *m_path, t_elements *g)
 {
-	if (!read_map(m_path, &g->map))
-		display_err(1);
-
+	read_map(m_path, &g->map);//all functions do error handling
 
 /*
 	g->background.p = mlx_new_image(g->mlx, g->background.w, g->background.h);
 	g->background.addr = (int *)mlx_get_data_addr(g->background.p, &g->background.bpp,
 			&g->background.line, &g->background.endian);
 	paint_window(&g->background, g->background.w, g->background.h);*/
+
+	/*-------------------TMP--------------------------*/
+	int i = -1;
+	int total = 0;
+	while (g->map.addr[++i])
+	{
+		printf("%s\n", g->map.addr[i]);
+		total += ft_strlen(g->map.addr[i]);
+	}
+	printf("%d x %d == %d", g->map.columns, g->map.rows, total);
+	/*-------------------TMP--------------------------*/
+
+
 }
 
 
@@ -97,9 +124,10 @@ int	main(int argc, char **argv)
 {
 	t_elements	g;
 
-
 	if (argc < 2)
 		display_err(2); //DISPLAY ERROR <----------
+	img_init(&g);
+	build_map(argv[1], &g);
 
 
 	// /*----------------TEST-------------------*/
@@ -119,17 +147,6 @@ int	main(int argc, char **argv)
 	// 	exit(0);
 	// /*----------------TEST-------------------*/
 
-
-	img_init(&g);
-	printf("%d\n", read_map(argv[1], &g.map));
-	int i = -1;
-	int total = 0;
-	while (g.map.addr[++i])
-	{
-		printf("%s\n", g.map.addr[i]);
-		total += ft_strlen(g.map.addr[i]);
-	}
-	printf("%d x %d == %d", g.map.columns, g.map.rows, total);
 	clear_map(g.map.addr);
 }
 

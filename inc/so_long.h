@@ -68,8 +68,8 @@ typedef struct	s_elements{
 	t_map		map;
 	t_data		background;
 	t_data		wall;
-	t_data		character;
-	t_data		collect;
+	t_data		P;
+	t_data		C;
 	t_data		E;
 }	t_elements;
 
@@ -84,7 +84,6 @@ void	ft_img_pixel_put(t_data *img, int color, int x, int y);
 void	*img_init(t_elements *g);
 
 /*map.c*/
-int		read_map(char *map, t_map *m);
 void	build_map(char *m_path, t_elements *g);
 void	paint_window(t_data *img, const int w, const int h);
 
