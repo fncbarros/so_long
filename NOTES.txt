@@ -21,3 +21,13 @@ PSEUDO (or blueprint rather):
 		Requires printing images for each action
 
 All image addresses dealt as int pointers/arrays
+
+My lil bitwise adventure:
+	int pe = 0;
+
+	if (map[j][i] == 'E')
+		pe ^= 'E';
+	if (map[j][i] == 'P')
+		pe ^= 'P' << 8;
+	if (pe != ('P' << 8) + 'E')
+		SALVE-SE QUEM PUDER
