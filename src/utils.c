@@ -36,7 +36,7 @@ static void	init_data(t_data *obj)
 	obj->endian = 0;
 }
 
-void	*img_init(t_elements *g)
+void	*g_init(t_elements *g)
 /*Not sure*/
 {
 	g->win_p = NULL;
@@ -46,7 +46,7 @@ void	*img_init(t_elements *g)
 	g->map.C = 0;
 	g->map.columns = 0;
 	g->map.rows = -1;
-	init_data(&g->background);
+	init_data(&g->floor);
 	init_data(&g->wall);
 	init_data(&g->P);
 	init_data(&g->C);

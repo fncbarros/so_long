@@ -43,31 +43,22 @@ W_WIDTH/W_HEIGHT dependent on map and asset sizes.......*/
 
 	if (argc < 2)
 		display_err(2); //DISPLAY ERROR <----------
+	g_init(&g);
 	g.mlx = mlx_init();
-
-	if (!read_map(argv[1], &g.map))
-		display_err(0); //DISPLAY ERROR
-	// build_map(argv[1], &g); //presumably sending every image to screen
+	build_map(argv[1], &g); //sends every image to screen
 
 
-	// g.wall.p = mlx_xpm_file_to_image(g.mlx, "img/proper_wall.xpm", &g.wall.w, &g.wall.h);
-	// g.wall.addr = (int *)mlx_get_data_addr(g.wall.p, &g.wall.bpp, &g.wall.
-	// line, &g.wall.endian); /*getting data from image but also mallocs(??)*/
-	// //if !g.wall.addr ...
-	// g.win_w = g.map.columns * g.wall.w;
-	// g.win_h = g.map.rows * g.wall.h;
-	// g.win_p = mlx_new_window(g.mlx, g.win_w, g.win_h, "So Long");
-	// g.background.w = g.win_w;
-	// g.background.h = g.win_h;
+	g.win_p = mlx_new_window(g.mlx, g.win_w, g.win_h, "So Long");
 
+	mlx_put_image_to_window(g.mlx, g.win_p, g.floor.p, 0, 0); //painting empty space
 
-
-	// mlx_put_image_to_window(g.mlx, g.win_p, g.background.p, 0, 0); //painting empty space
 
 	// g.character.p = mlx_xpm_file_to_image(g.mlx, "img/marvin.xpm", &g.character.w, &g.character.h);
 	// g.character.addr = (int *)mlx_get_data_addr(g.character.p, &g.character.bpp, &g.character.line, &g.character.endian); /*getting data from image but also mallocs(??)*/
 
 	// mlx_put_image_to_window(g.mlx, g.win_p, g.character.p, 600, 400);
+
+
 
 	// int	x = 0;
 	// int	y = 0;
@@ -81,9 +72,9 @@ W_WIDTH/W_HEIGHT dependent on map and asset sizes.......*/
 	// y += g.wall.w;
 	// mlx_put_image_to_window(g.mlx, g.win_p, g.wall.p, x, y);
 
-	// mlx_loop(g.mlx);
-	// mlx_destroy_image(g.mlx, g.background.p); /*free memory ??*/
-	// mlx_destroy_window(g.mlx, g.win_p); /*free memory ??*/
+	mlx_loop(g.mlx);
+	mlx_destroy_image(g.mlx, g.floor.p); /*free memory ??*/
+	mlx_destroy_window(g.mlx, g.win_p); /*free memory ??*/
 	clear_map(g.map.addr);
-	return (0);
+	// return (0);
 }

@@ -66,7 +66,7 @@ typedef struct	s_elements{
 	int			win_w;
 	int			win_h;
 	t_map		map;
-	t_data		background;
+	t_data		floor;
 	t_data		wall;
 	t_data		P;
 	t_data		C;
@@ -81,7 +81,7 @@ void	*malloc_n_check(size_t block, void *content, int flag);
 /*utils.c*/
 int		ft_offset(int x, int y, const t_data data);
 void	ft_img_pixel_put(t_data *img, int color, int x, int y);
-void	*img_init(t_elements *g);
+void	*g_init(t_elements *g);
 
 /*map.c*/
 void	build_map(char *m_path, t_elements *g);
