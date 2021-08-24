@@ -100,7 +100,7 @@ static char	**two_dimension_realloc(char ***p_arr, int size)
 	return (tmp);
 }
 
-static void	read_map(char *map, t_map *m)
+void	read_map(char *map, t_map *m)
 /*Stores map in 2d array char **addr; reallocs (sorta)
 All functions handle errors
 Malloc'ing empty line instead of setting to NULL <----------------------- FIXIT!!!!!!
@@ -130,52 +130,54 @@ Malloc'ing empty line instead of setting to NULL <----------------------- FIXIT!
 	further_check(m);
 }
 
-/*put images to window(void *mlx, void *win, t_elements *g)
-					or*/
-static void	img_position(t_elements *g, char element, int x, int y)
-{
-	void	*img;
 
-	if (element == '1')
-		img = g->wall.p;
-	if (element == 'P')
-		img = g->P.p;
-	if (element == 'E')
-		img = g->E.p;
-	if (element == 'C')
-		img = g->C.p;
+// static void	img_position(t_elements *g, char element, int x, int y)
+// {
+// 	void	*img;
 
-	//need calculate offset ---> MACRO
-	if (!mlx_put_image_to_window(g->mlx, g->win_p, img, x, y))
-		display_err(clear_map(g->map.addr)); //Not sure about err checking
-}
+// 	if (element == '1')
+// 		img = g->wall.p;
+// 	if (element == 'P')
+// 		img = g->P.p;
+// 	if (element == 'E')
+// 		img = g->E.p;
+// 	if (element == 'C')
+// 		img = g->C.p;
+
+// 	//need calculate offset ---> MACRO
+// 	if (!mlx_put_image_to_window(g->mlx, g->win_p, img, x, y))
+// 		display_err(clear_map(g->map.addr)); //Not sure about err checking
+// }
 void	build_map(char *m_path, t_elements *g)
 /*Need to check mlx returns*/
 {
+	// int	i;
+	// int	j;
+	
 	read_map(m_path, &g->map); //might leave the calling to main because window
-	setup_game(g);
-
-	int	i;
-	int	j;
-
-	i = 0;
-	while (g->map.addr[i])
-	{
-		j = -1;
-		while (++j < g->map.columns /*g->map.addr[i][j]*/)
-		{
-			if (g->map.addr[i][j] == '0')
-				j++;
-			if (j < g->map.columns)
-			{
-				img_position(g, g->map.addr[i][j], j, i); //not sure about j and i
-			}
-		}
-		i++;
-		//g->map.
-	}
+	
+	// setup_game(g);
 
 
+
+
+	// setup_game(g);
+	// i = -1;
+	// while (g->map.addr[++i])
+	// {
+	// 	j = -1;
+	// 	while (++j < g->map.columns /*g->map.addr[i][j]*/)
+	// 	{
+	// 		if (g->map.addr[i][j] == '0')
+	// 			j++;
+	// 		if (j < g->map.columns)
+	// 		{
+	// 			img_position(g, g->map.addr[i][j], j, i); //not sure about j and i
+	// 		}
+	// 	}
+	// 	// i++;
+	// 	//g->map.
+	// }
 }
 
 // int	main(int argc, char **argv)

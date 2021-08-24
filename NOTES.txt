@@ -1,33 +1,23 @@
-TODO:	-Remake map reading
-			Maybe build map as you go;
-		-Restructure main;
-			More functions;
+TODO:	-Movement;
+		-Events;
 		-Error handling!!;
 
 PSEUDO (or blueprint rather):
-	read map
-	check if it's valid
-		valid chars 01CEP(only 1 P and 1 E)
+	read map x
+	check if it's valid x
+		valid chars 01CEP(only 1 P and 1 E) x
 		1st and last line needs be all 1's and all others need start and end w/ a 1
-		total needs to be equal to no of lines * lenght of 1st line
-		if not display err ("Error\n" followed by an explicit error message)
-	mlx init
-	build images
+		total needs to be equal to no of lines * lenght of 1st line x
+		if not display err ("Error\n" followed by an explicit error message) x
+	mlx init x
+	build images x
 	build window (wall image line lenght (in pixels) * map width (in 1's))
-		(paint window...)
-	build map through array (1d/2d ??) (send every image to window)
+		(paint window...) x
+	build map through array (1d/2d ??) (send every image to window) x
 	build keyhooks (WASD, ESC, red cross button, need free all memory in such cases)
 		Actions: movement, collecting and exiting
 		Requires printing images for each action
 
 All image addresses dealt as int pointers/arrays
 
-My lil bitwise adventure:
-	int pe = 0;
-
-	if (map[j][i] == 'E')
-		pe ^= 'E';
-	if (map[j][i] == 'P')
-		pe ^= 'P' << 8;
-	if (pe != ('P' << 8) + 'E')
-		SALVE-SE QUEM PUDER
+	int	mlx_put_image_to_window_scale(?...?); (???????)

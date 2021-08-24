@@ -23,10 +23,15 @@
 # include "libft.h"
 # include "get_next_line.h"
 
-#define W_WIDTH 1920 //Both dependent on map and asset size
+#define W_WIDTH 1920
 #define W_HEIGHT 1080
 
-/*---------->NEED REDO STRUCTS<------------*/
+#define SQUARE 150
+
+/*key hooks*/
+#define KEY_PRESS       2 //keyboard events
+#define KEY_ESC 53
+#define X_BUTTON_EXIT   17 //mouse close
 
 /*----------PROTO--------------*/
 typedef union s_creation
@@ -85,9 +90,15 @@ void	*g_init(t_elements *g);
 
 /*map.c*/
 void	build_map(char *m_path, t_elements *g);
-void	paint_window(t_data *img, const int w, const int h);
+void	read_map(char *map, t_map *m);
 
 /*build.c*/
+void	paint_window(t_data *img, const int w, const int h);
 void	setup_game(t_elements *g);
+void	put_to_window(t_elements *g);
+
+/*events.c*/
+int     key_close(int key);
+int     key_press(int key);
 
 #endif
