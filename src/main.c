@@ -34,17 +34,25 @@ W_WIDTH/W_HEIGHT dependent on map and asset sizes.......*/
 	setup_game(&g);
 	g.win_p = mlx_new_window(g.mlx, g.win_w, g.win_h, "So Long");
 	put_to_window(&g);
-	mlx_key_hook(g.win_p, &key_press, 0); // REVIEW
-    mlx_hook(g.win_p, X_BUTTON_EXIT, 0, &key_close, 0); // REVIEW
+	mlx_key_hook(g.win_p, &key_press, &g); // REVIEW
+    mlx_hook(g.win_p, X_BUTTON_EXIT, 0, &key_close, &g); // REVIEW
 
 	/*___________________________________TESTING____________________________________________*/
+	while (*g.map.addr) //finding character position
+	{
+		**g.hero = ft_strchr(*g.map.addr++, 'P');
+		if (**g.hero)
+			break ;
+	}
+
 	/*___________________________________TESTING____________________________________________*/
 
 
 	mlx_loop(g.mlx);
 	clear_map(g.map.addr);
 	mlx_destroy_image(g.mlx, g.floor.p); /*free memory ??*/
-	mlx_destroy_window(g.mlx, g.win_p); /*free memory ??*/
+	mlx_destroy_window(g.mlx, g.win_p);
+ /*free memory ??*/
 	// return (0);
 }
 

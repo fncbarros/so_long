@@ -29,9 +29,13 @@
 #define SQUARE 150
 
 /*key hooks*/
-#define KEY_PRESS       2 //keyboard events
+#define KEY_PRESS 2 //keyboard events
 #define KEY_ESC 53
-#define X_BUTTON_EXIT   17 //mouse close
+#define X_BUTTON_EXIT 17 //mouse close
+#define UP 13
+#define DOWN 1
+#define LEFT 0
+#define RIGHT 2
 
 /*----------PROTO--------------*/
 typedef union s_creation
@@ -76,6 +80,7 @@ typedef struct	s_elements{
 	t_data		P;
 	t_data		C;
 	t_data		E;
+	char		**hero;
 }	t_elements;
 
 /*err.c*/
@@ -98,7 +103,7 @@ void	setup_game(t_elements *g);
 void	put_to_window(t_elements *g);
 
 /*events.c*/
-int     key_close(int key);
-int     key_press(int key);
+int     key_close(int key, t_elements *g); //red window button
+int     key_press(int key, t_elements *g); // prints keys on screen
 
 #endif

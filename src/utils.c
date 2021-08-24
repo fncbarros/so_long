@@ -42,7 +42,6 @@ void	*g_init(t_elements *g)
 	g->win_p = NULL;
 	g->win_h = 0;
 	g->win_w = 0;
-	// *(g->map.addr) = 0;
 	g->map.C = 0;
 	g->map.columns = 0;
 	g->map.rows = -1;
@@ -51,6 +50,7 @@ void	*g_init(t_elements *g)
 	init_data(&g->P);
 	init_data(&g->C);
 	init_data(&g->E);
+	*g->hero = '\0'; //????
 	return (NULL); //??
 }
 /*

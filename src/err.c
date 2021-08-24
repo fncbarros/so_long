@@ -12,8 +12,17 @@
 
 #include "../inc/so_long.h"
 
-/*perror(strerror(int enum));
-    perror("Error");
+/*
+maybe somethn like check(mlx_put_image...) for failure checking
+
+void or int check(int i, t_elements *g)
+{
+    if (!i)
+    {
+        clear_everything;
+        exit
+    }
+}
 */
 
 void	*malloc_n_check(size_t block, void *content, int flag)
