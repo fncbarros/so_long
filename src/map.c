@@ -15,7 +15,7 @@
 static int	element_control(char c)
 /*Very sloppy implementation but the intention was good.
  So this serves as an auxiliary to the map scanning function, returning one of three values:
- 	- A number less than 69 (ascii for E) in case it detects a certain failure (if there's more than one P or E element 
+ 	- A number less than 69 (ascii for E) in case it detects a certain failure (if there's more than one P or E element
 	or anything else than "01PCE")". In such case it will return the error id (see display_err() in err.c);
 	- pe in case if finds an 'E' or 'P' element for the first time. pe should be equal to
 	the bit representation of 'P' followed by 'E' (hence the name) once the map(see "parent" function)
@@ -131,43 +131,50 @@ Malloc'ing empty line instead of setting to NULL <----------------------- FIXIT!
 }
 
 /*put images to window(void *mlx, void *win, t_elements *g)
-					or
-init_images(t_elements *g)*/
+					or*/
+static void	img_position(t_elements *g, char element, int x, int y)
+{
+	void	*img;
 
+	if (element == '1')
+		img = g->wall.p;
+	if (element == 'P')
+		img = g->P.p;
+	if (element == 'E')
+		img = g->E.p;
+	if (element == 'C')
+		img = g->C.p;
+
+	//need calculate offset ---> MACRO
+	if (!mlx_put_image_to_window(g->mlx, g->win_p, img, x, y))
+		display_err(clear_map(g->map.addr)); //Not sure about err checking
+}
 void	build_map(char *m_path, t_elements *g)
 /*Need to check mlx returns*/
 {
 	read_map(m_path, &g->map); //might leave the calling to main because window
-	g->wall.p = mlx_xpm_file_to_image(g->mlx, "img/proper_wall.xpm", &g->wall.w, &g->wall.h);	
-	g->wall.addr = (int *)mlx_get_data_addr(g->wall.p, &g->wall.bpp, &g->wall.line, &g->wall.endian);
-	// g->P.p = mlx_xpm_file_to_image(g->mlx, "img/marvin.xpm", &g->P.w, &g->P.h);
-	// g->P.addr = (int *)mlx_get_data_addr(g->P.p, &g->P.bpp, &g->P.line, &g->P.endian);
-	// g->E.p = mlx_xpm_file_to_image(g->mlx, "img/ whatevs .xpm", &g->E.w, &g->E.h);
-	// g->E.addr = (int *)mlx_get_data_addr(g->E.p, &g->E.bpp, &g->E.line, &g->E.endian);
-	// g->C.p = mlx_xpm_file_to_image(g->mlx, "img/ ... .xpm", &g->C.w, &g->C.h);
-	// g->C.addr = (int *)mlx_get_data_addr(g->C.p, &g->C.bpp, &g->C.line, &g->C.endian);
-	// check if any returned NULL ??
+	setup_game(g);
 
-	/*          background              */
-	g->win_w = g->map.columns * g->wall.w;
-	g->win_h = g->map.rows * g->wall.h;
-	g->floor.h = g->win_h; // ...
-	g->floor.w = g->win_w; // ...
-	g->floor.p = mlx_new_image(g->mlx, g->floor.w, g->floor.h);
-	g->floor.addr = (int *)mlx_get_data_addr(g->floor.p, &g->floor.bpp,
-			&g->floor.line, &g->floor.endian);
-	paint_window(&g->floor, g->floor.w, g->floor.h);
-	/*          background              */
-
-
-	/*          walls              */
 	int	i;
+	int	j;
 
 	i = 0;
-	while (g->map.addr)
+	while (g->map.addr[i])
+	{
+		j = -1;
+		while (++j < g->map.columns /*g->map.addr[i][j]*/)
+		{
+			if (g->map.addr[i][j] == '0')
+				j++;
+			if (j < g->map.columns)
+			{
+				img_position(g, g->map.addr[i][j], j, i); //not sure about j and i
+			}
+		}
+		i++;
+		//g->map.
+	}
 
-
-	/*          walls              */
 
 }
 

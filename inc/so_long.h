@@ -87,4 +87,7 @@ void	*g_init(t_elements *g);
 void	build_map(char *m_path, t_elements *g);
 void	paint_window(t_data *img, const int w, const int h);
 
+/*build.c*/
+void	setup_game(t_elements *g);
+
 #endif
