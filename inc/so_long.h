@@ -23,10 +23,9 @@
 # include "libft.h"
 # include "get_next_line.h"
 
-#define W_WIDTH 1920
-#define W_HEIGHT 1080
-
+/*All images set to I_SIZE x I_SIZE*/
 #define I_SIZE 150
+#define FLOOR 4743554
 
 /*key hooks*/
 #define KEY_PRESS 2 //keyboard events
@@ -60,12 +59,15 @@ typedef struct	s_data{
 	int		endian;
 }	t_data;
 
-/*map info*/
+/*map info
+Px and Py are 'P'coordinates*/
 typedef struct	s_map{
 	char	**addr;
 	int		rows;
 	int		columns;
 	int		C;
+	int		Px;
+	int		Py;
 }	t_map;
 
 /*everything*/
@@ -80,7 +82,6 @@ typedef struct	s_elements{
 	t_data		P;
 	t_data		C;
 	t_data		E;
-	char		**hero;
 }	t_elements;
 
 /*err.c*/
@@ -98,9 +99,8 @@ void	build_map(char *m_path, t_elements *g);
 void	read_map(char *map, t_map *m);
 
 /*build.c*/
-void	paint_window(t_data *img, const int w, const int h);
 void	setup_game(t_elements *g);
-void	put_to_window(t_elements *g);
+void	put_to_window(t_elements *g, int i, int ret);
 
 /*events.c*/
 int     key_close(int key, t_elements *g); //red window button

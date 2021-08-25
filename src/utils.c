@@ -26,10 +26,11 @@ void	ft_img_pixel_put(t_data *img, int color, int x, int y)
 }
 
 static void	init_data(t_data *obj)
+/*Creating all images I_SIZE x I_SIZE */
 {
 	obj->p = NULL;
-	obj->w = 0;
-	obj->h = 0;
+	obj->w = I_SIZE;
+	obj->h = I_SIZE;
 	obj->addr = NULL;
 	obj->bpp = 0;
 	obj->line = 0;
@@ -50,7 +51,6 @@ void	*g_init(t_elements *g)
 	init_data(&g->P);
 	init_data(&g->C);
 	init_data(&g->E);
-	*g->hero = '\0'; //????
 	return (NULL); //??
 }
 /*

@@ -44,16 +44,14 @@ static int	element_control(char c)
 	return (pe);
 }
 
-static void	further_check(t_map *m)
+static void	further_check(t_map *m, int i)
 /*Overwrite > 1 'E' or 'P' deleting one-a-them ???
 	Accept lower case elements ?? (toupper)
  Checks if map is rectangular and outterbounds are filled with 1's.*/
 {
-	int	i;
 	int	j;
 	static int	pe;
 
-	i = -1;
 	while (++i < (m->columns))
 	{
 		j = 0;
@@ -69,6 +67,11 @@ static void	further_check(t_map *m)
 			pe = element_control(m->addr[j][i]);
 			if (pe < 69)
 				display_err(clear_map(m->addr) + pe);
+			if (m->addr[j][i] == 'P') //Dumb
+			{
+				m->Px = i;
+				m->Py = j;
+			}
 		}
 	}
 	if (pe != ('P' << 8) + 'E')
@@ -127,78 +130,5 @@ Malloc'ing empty line instead of setting to NULL <----------------------- FIXIT!
 	if (r < 0)
 		display_err(clear_map(m->addr) + (r * -1));
 	m->rows++;
-	further_check(m);
+	further_check(m, -1);
 }
-
-
-// static void	img_position(t_elements *g, char element, int x, int y)
-// {
-// 	void	*img;
-
-// 	if (element == '1')
-// 		img = g->wall.p;
-// 	if (element == 'P')
-// 		img = g->P.p;
-// 	if (element == 'E')
-// 		img = g->E.p;
-// 	if (element == 'C')
-// 		img = g->C.p;
-
-// 	//need calculate offset ---> MACRO
-// 	if (!mlx_put_image_to_window(g->mlx, g->win_p, img, x, y))
-// 		display_err(clear_map(g->map.addr)); //Not sure about err checking
-// }
-void	build_map(char *m_path, t_elements *g)
-/*Need to check mlx returns*/
-{
-	// int	i;
-	// int	j;
-	
-	read_map(m_path, &g->map); //might leave the calling to main because window
-	
-	// setup_game(g);
-
-
-
-
-	// setup_game(g);
-	// i = -1;
-	// while (g->map.addr[++i])
-	// {
-	// 	j = -1;
-	// 	while (++j < g->map.columns /*g->map.addr[i][j]*/)
-	// 	{
-	// 		if (g->map.addr[i][j] == '0')
-	// 			j++;
-	// 		if (j < g->map.columns)
-	// 		{
-	// 			img_position(g, g->map.addr[i][j], j, i); //not sure about j and i
-	// 		}
-	// 	}
-	// 	// i++;
-	// 	//g->map.
-	// }
-}
-
-// int	main(int argc, char **argv)
-// {
-// 	t_elements	g;
-
-// 	if (argc < 2)
-// 		display_err(2); //DISPLAY ERROR <----------
-// 	img_init(&g);
-// 	build_map(argv[1], &g);
-// 	clear_map(g.map.addr);
-// }
-
-
-	/*-------------------TMP--------------------------*/
-	// int i = -1;
-	// int total = 0;
-	// while (g->map.addr[++i])
-	// {
-	// 	printf("%s\n", g->map.addr[i]);
-	// 	total += ft_strlen(g->map.addr[i]);
-	// }
-	// printf("%d x %d == %d", g->map.columns, g->map.rows, total);
-	/*-------------------TMP--------------------------*/
