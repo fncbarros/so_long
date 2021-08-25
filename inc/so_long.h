@@ -26,7 +26,7 @@
 #define W_WIDTH 1920
 #define W_HEIGHT 1080
 
-#define SQUARE 150
+#define I_SIZE 150
 
 /*key hooks*/
 #define KEY_PRESS 2 //keyboard events

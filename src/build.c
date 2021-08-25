@@ -21,7 +21,7 @@ void	paint_window(t_data *img, const int w, const int h)
     z = -1;
 	while (++z < (w * h))
 		img->addr[z] = 4743554;
-	
+
 }
 
 void	setup_game(t_elements *g)
@@ -61,13 +61,13 @@ void	put_to_window(t_elements *g)
 		while (++j < g->map.columns)
 		{
 			if (g->map.addr[i][j] == '1')
-				ret = mlx_put_image_to_window(g->mlx, g->win_p, g->wall.p, j * SQUARE, i * SQUARE);
+				ret = mlx_put_image_to_window(g->mlx, g->win_p, g->wall.p, j * I_SIZE, i * I_SIZE);
 			else if (g->map.addr[i][j] == 'P')
-				ret = mlx_put_image_to_window(g->mlx, g->win_p, g->P.p, j * SQUARE, i * SQUARE);
+				ret = mlx_put_image_to_window(g->mlx, g->win_p, g->P.p, j * I_SIZE, i * I_SIZE);
 			else if (g->map.addr[i][j] == 'C')
-				ret = mlx_put_image_to_window(g->mlx, g->win_p, g->C.p, j * SQUARE, i * SQUARE);
+				ret = mlx_put_image_to_window(g->mlx, g->win_p, g->C.p, j * I_SIZE, i * I_SIZE);
 			else if (g->map.addr[i][j] == 'E')
-				ret = mlx_put_image_to_window(g->mlx, g->win_p, g->E.p, j * SQUARE, i * SQUARE);
+				ret = mlx_put_image_to_window(g->mlx, g->win_p, g->E.p, j * I_SIZE, i * I_SIZE);
 			if (!ret)
 				display_err(clear_map(g->map.addr));
 		}
