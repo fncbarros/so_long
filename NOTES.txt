@@ -2,6 +2,12 @@ TODO:	-Movement;
 		-Events;
 		-Error handling!!;
 
+	map.c:further_check()
+		TOO MANY LINES!!! <------------------- [!]
+		Need check if t_map.C > 0
+		Overwrite > 1 'E' or 'P' deleting one-a-them ???
+		Accept lower case elements ?? (toupper)
+
 PSEUDO (or blueprint rather):
 	read map x
 	check if it's valid x
@@ -21,3 +27,11 @@ PSEUDO (or blueprint rather):
 All image addresses dealt as int pointers/arrays
 
 	int	mlx_put_image_to_window_scale(?...?); (???????)
+
+ERR MANAGEMENT
+typedef union u_creation
+{
+	int		(*mlx_put_image_to_window)(void *mlx_ptr, void *win_ptr, void  *img_ptr, int x, int y);
+	void	*(**mlx_new_image)( void *mlx_ptr, int width, int height);
+}	t_creation;
+	... or something like that
