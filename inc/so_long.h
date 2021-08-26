@@ -48,7 +48,7 @@ typedef struct s_data{
 }	t_data;
 
 /*map info
-Px and Py are 'P'coordinates*/
+Px and Py are 'P'coordinates to track character*/
 typedef struct s_map{
 	char	**addr;
 	int		rows;
@@ -58,7 +58,8 @@ typedef struct s_map{
 	int		Py;
 }	t_map;
 
-/*everything*/
+/*everything
+	win_w and win_h dependent on asset sizes(I_SIZE)*/
 typedef struct s_elements{
 	void		*mlx;
 	void		*win_p;

@@ -45,8 +45,7 @@ static int	element_control(char c)
 }
 
 static void	further_check(t_map *m, int i)
-/*Overwrite > 1 'E' or 'P' deleting one-a-them ???
-	Accept lower case elements ?? (toupper)
+/*
  Checks if map is rectangular and outterbounds are filled with 1's.*/
 {
 	int	j;
@@ -67,11 +66,13 @@ static void	further_check(t_map *m, int i)
 			pe = element_control(m->addr[j][i]);
 			if (pe < 69)
 				display_err(clear_map(m->addr) + pe);
-			if (m->addr[j][i] == 'P') //Dumb
+			if (m->addr[j][i] == 'P') // Repeating yourself
 			{
 				m->Px = i;
 				m->Py = j;
 			}
+			if (m->addr[j][i] == 'C')
+				m->C++;
 		}
 	}
 	if (pe != ('P' << 8) + 'E')
@@ -79,7 +80,8 @@ static void	further_check(t_map *m, int i)
 }
 
 static char	**two_dimension_realloc(char ***p_arr, int size)
-/*Allways sets last double pointer to NULL*/
+/*Auxiliary function to help copy map to 2d array. Reallocates double char pointer size allways setting last one to NULL
+Might be allocating one too many but it's working*/
 {
 	char	**tmp;
 	char	**tmp2;

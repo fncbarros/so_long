@@ -13,6 +13,7 @@
 #include "../inc/so_long.h"
 
 static void	paint_floor(t_data *img, const int w, const int h, int color)
+/*"Paints" new image with single color*/
 {
 	int	z;
 
@@ -22,20 +23,24 @@ static void	paint_floor(t_data *img, const int w, const int h, int color)
 }
 
 void	setup_game(t_elements *g)
-/*A little too much code...*/
+/*Need to remake floor, not the best aproach
+(l.:31-32) -Sets window size taking img sizes into account (all imgs I_SIZE x 			I_SIZE squares);
+(l.:33-38) -Creates a window sized matte floor of color defined by Macro FLOOR;
+(l.:39-54) -Fetches imgs from img/ folder and "builds" them;
+*/
 {
-	g->wall.p = mlx_xpm_file_to_image(g->mlx,
-			"img/wall.xpm", &g->wall.w, &g->wall.h);
-	g->wall.addr = (int *)mlx_get_data_addr(g->wall.p, &g->wall.bpp,
-			&g->wall.line, &g->wall.endian);
-	g->win_w = g->map.columns * g->wall.w;
-	g->win_h = g->map.rows * g->wall.h;
+	g->win_w = g->map.columns * I_SIZE;
+	g->win_h = g->map.rows * I_SIZE;
 	g->floor.h = g->win_h;
 	g->floor.w = g->win_w;
 	g->floor.p = mlx_new_image(g->mlx, g->floor.w, g->floor.h);
 	g->floor.addr = (int *)mlx_get_data_addr(g->floor.p,
 			&g->floor.bpp, &g->floor.line, &g->floor.endian);
 	paint_floor(&g->floor, g->floor.w, g->floor.h, FLOOR);
+	g->wall.p = mlx_xpm_file_to_image(g->mlx,
+			"img/wall.xpm", &g->wall.w, &g->wall.h);
+	g->wall.addr = (int *)mlx_get_data_addr(g->wall.p, &g->wall.bpp,
+			&g->wall.line, &g->wall.endian);
 	g->P.p = mlx_xpm_file_to_image(g->mlx,
 			"img/Marvin.xpm", &g->P.w, &g->P.h);
 	g->P.addr = (int *)mlx_get_data_addr(g->P.p, &g->P.bpp,
@@ -52,7 +57,8 @@ void	setup_game(t_elements *g)
 }
 
 static void	*new_floor(t_elements *g)
-/*Stupidest shit ever. Couldn't shrink floor image size any other way*/
+/*REMAKE: New img pointer I_SIZE x I_SIZE for "patching up" floor or
+	Rebuild everything everytime there's a change*/
 {
 	t_data	tmp;
 
@@ -68,6 +74,7 @@ static void	*new_floor(t_elements *g)
 }
 
 void	put_to_window(t_elements *g, int i, int ret)
+/*Scans map and displays every object. It should run everytime there's a specific event*/
 {
 	int	j;
 
