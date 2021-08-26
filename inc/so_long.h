@@ -24,32 +24,20 @@
 # include "get_next_line.h"
 
 /*All images set to I_SIZE x I_SIZE*/
-#define I_SIZE 150
-#define FLOOR 4743554
+# define I_SIZE 150
+# define FLOOR 4743554
 
 /*key hooks*/
-#define KEY_PRESS 2 //keyboard events
-#define KEY_ESC 53
-#define X_BUTTON_EXIT 17 //mouse close
-#define UP 13
-#define DOWN 1
-#define LEFT 0
-#define RIGHT 2
-
-/*----------PROTO--------------*/
-typedef union s_creation
-/*for error management purposes
-	*/
-{
-	int		(*mlx_put_image_to_window)(void *mlx_ptr, void *win_ptr, void  *img_ptr,
-				int x, int y);
-	void	*(**mlx_new_image)( void *mlx_ptr, int width, int height); //???????
-}	t_creation;
-
-/*----------PROTO--------------*/
+# define KEY_PRESS 2 //keyboard events
+# define KEY_ESC 53
+# define X_BUTTON_EXIT 17 //mouse close
+# define UP 13
+# define DOWN 1
+# define LEFT 0
+# define RIGHT 2
 
 /*for images*/
-typedef struct	s_data{
+typedef struct s_data{
 	void	*p;
 	int		w;
 	int		h;
@@ -61,7 +49,7 @@ typedef struct	s_data{
 
 /*map info
 Px and Py are 'P'coordinates*/
-typedef struct	s_map{
+typedef struct s_map{
 	char	**addr;
 	int		rows;
 	int		columns;
@@ -71,7 +59,7 @@ typedef struct	s_map{
 }	t_map;
 
 /*everything*/
-typedef struct	s_elements{
+typedef struct s_elements{
 	void		*mlx;
 	void		*win_p;
 	int			win_w;
@@ -103,7 +91,7 @@ void	setup_game(t_elements *g);
 void	put_to_window(t_elements *g, int i, int ret);
 
 /*events.c*/
-int     key_close(int key, t_elements *g); //red window button
-int     key_press(int key, t_elements *g); // prints keys on screen
+int		key_close(int key, t_elements *g); //red window button
+int		key_press(int key, t_elements *g); // prints keys on screen
 
 #endif
