@@ -55,7 +55,7 @@ void	display_err(int num)
     else if (num == 2)
         ft_putstr_fd("Missing *.ber file.\n", 2);
     else if (num == 3)
-        ft_putstr_fd("Wrong number of 'P' or 'E' elements in map.\n", 2);
+        ft_putstr_fd("Wrong number of 'P','E' and/or 'C' elements in map.\n", 2);
     else if (num == 4)
         ft_putstr_fd("Map is not rectangular.\n", 2);
     else if (num == 5)
@@ -82,5 +82,6 @@ int    clear_map(char **map)
             free(*map++);
         free(tmp);
     }
+    map = NULL;
     return(0);
 }

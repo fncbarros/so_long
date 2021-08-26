@@ -28,7 +28,7 @@
 # define FLOOR 4743554
 
 /*key hooks*/
-# define KEY_PRESS 2 //keyboard events
+# define KEY_PRESS 1L //keyboard events
 # define KEY_ESC 53
 # define X_BUTTON_EXIT 17 //mouse close
 # define UP 13
@@ -89,10 +89,11 @@ void	read_map(char *map, t_map *m);
 
 /*build.c*/
 void	setup_game(t_elements *g);
-void	put_to_window(t_elements *g, int i, int ret);
+int	put_to_window(t_elements *g, int i, int ret);
 
 /*events.c*/
 int		key_close(int key, t_elements *g); //red window button
 int		key_press(int key, t_elements *g); // prints keys on screen
+int 	ft_render(t_elements *g);
 
 #endif

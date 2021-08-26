@@ -75,7 +75,7 @@ static void	further_check(t_map *m, int i)
 				m->C++;
 		}
 	}
-	if (pe != ('P' << 8) + 'E')
+	if (pe != ('P' << 8) + 'E' || !m->C)
 		display_err(clear_map(m->addr) + 3);
 }
 

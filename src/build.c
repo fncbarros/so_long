@@ -56,30 +56,30 @@ void	setup_game(t_elements *g)
 	// check for NULLs
 }
 
-static void	*new_floor(t_elements *g)
-/*REMAKE: New img pointer I_SIZE x I_SIZE for "patching up" floor or
-	Rebuild everything everytime there's a change*/
-{
-	t_data	tmp;
+// static void	*new_floor(t_elements *g)
+// /*REMAKE: New img pointer I_SIZE x I_SIZE for "patching up" floor or
+// 	Rebuild everything everytime there's a change*/
+// {
+// 	t_data	tmp;
 
-	tmp.p = mlx_new_image(g->mlx, I_SIZE, I_SIZE);
-	tmp.addr = (int *)mlx_get_data_addr(tmp.p,
-			&tmp.bpp, &tmp.line, &tmp.endian);
-	paint_floor(&tmp, I_SIZE, I_SIZE, FLOOR);
-	g->floor.h = I_SIZE;
-	g->floor.w = I_SIZE;
-	g->floor.addr = tmp.addr;
-	g->floor.line = tmp.line;
-	return (tmp.p);
-}
+// 	tmp.p = mlx_new_image(g->mlx, I_SIZE, I_SIZE);
+// 	tmp.addr = (int *)mlx_get_data_addr(tmp.p,
+// 			&tmp.bpp, &tmp.line, &tmp.endian);
+// 	paint_floor(&tmp, I_SIZE, I_SIZE, FLOOR);
+// 	g->floor.h = I_SIZE;
+// 	g->floor.w = I_SIZE;
+// 	g->floor.addr = tmp.addr;
+// 	g->floor.line = tmp.line;
+// 	return (tmp.p);
+// }
 
-void	put_to_window(t_elements *g, int i, int ret)
-/*Scans map and displays every object. It should run everytime there's a specific event*/
+int	put_to_window(t_elements *g, int i, int ret)
+/*Scans map and displays every object. It should run everytime there's a specific event
+	i decides which line ro start printing from*/
 {
 	int	j;
 
-	g->floor.p = new_floor(g);
-	while (i < g->map.rows)
+	while (++i < g->map.rows)
 	{
 		j = -1;
 		while (++j < g->map.columns)
@@ -88,17 +88,27 @@ void	put_to_window(t_elements *g, int i, int ret)
 				ret = mlx_put_image_to_window(g->mlx,
 						g->win_p, g->wall.p, j * I_SIZE, i * I_SIZE);
 			else if (g->map.addr[i][j] == 'P')
+			{
+				// if (g->map.C < 0)
+				// 	ret = mlx_put_image_to_window(g->mlx,
+				// 			g->win_p, g->E.p, j * I_SIZE, i * I_SIZE);
 				ret = mlx_put_image_to_window(g->mlx,
 						g->win_p, g->P.p, j * I_SIZE, i * I_SIZE);
+			}
 			else if (g->map.addr[i][j] == 'C')
 				ret = mlx_put_image_to_window(g->mlx,
 						g->win_p, g->C.p, j * I_SIZE, i * I_SIZE);
 			else if (g->map.addr[i][j] == 'E')
+			{
 				ret = mlx_put_image_to_window(g->mlx,
 						g->win_p, g->E.p, j * I_SIZE, i * I_SIZE);
-			if (!ret)
-				display_err(clear_map(g->map.addr));
+				if (g->map.Px == j && g->map.Py == i)
+					ret = mlx_put_image_to_window(g->mlx,
+						g->win_p, g->P.p, j * I_SIZE, i * I_SIZE);
+			}
+			// if (!ret)
+				// display_err(clear_map(g->map.addr));
 		}
-		i++;
 	}
+	return (ret);
 }
