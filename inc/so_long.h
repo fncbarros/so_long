@@ -24,8 +24,8 @@
 # include "get_next_line.h"
 
 /*All images set to I_SIZE x I_SIZE*/
-# define I_SIZE 150
-# define FLOOR 4743554
+# define I_SIZE 100
+# define FLOOR 0x1e3b67 /*4743554*/
 
 /*key hooks*/
 # define KEY_PRESS 1L //keyboard events
@@ -92,7 +92,7 @@ void	setup_game(t_elements *g);
 int	put_to_window(t_elements *g, int i, int ret);
 
 /*events.c*/
-int		key_close(int key, t_elements *g); //red window button
+int		key_close(t_elements *g); //red window button
 int		key_press(int key, t_elements *g); // prints keys on screen
 int 	ft_render(t_elements *g);
 

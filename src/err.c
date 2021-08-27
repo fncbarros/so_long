@@ -73,15 +73,19 @@ void    err_check(void *element)
 */
 int    clear_map(char **map)
 {
-    char    **tmp;
+    int i;
 
-    tmp = map;
-    if (*map)
+    i = 0;
+    if (map)
     {
-        while (*map)
-            free(*map++);
-        free(tmp);
+        printf("map ptr: %p\n", map);
+        while (map[i])
+        {
+            printf("%d\n", i);
+            free(map[i]);
+            i++;
+        }
+        free(map);
     }
-    map = NULL;
-    return(0);
+    return (0);
 }

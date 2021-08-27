@@ -38,19 +38,19 @@ void	setup_game(t_elements *g)
 			&g->floor.bpp, &g->floor.line, &g->floor.endian);
 	paint_floor(&g->floor, g->floor.w, g->floor.h, FLOOR);
 	g->wall.p = mlx_xpm_file_to_image(g->mlx,
-			"img/wall.xpm", &g->wall.w, &g->wall.h);
+			"img/wall_100.xpm", &g->wall.w, &g->wall.h);
 	g->wall.addr = (int *)mlx_get_data_addr(g->wall.p, &g->wall.bpp,
 			&g->wall.line, &g->wall.endian);
 	g->P.p = mlx_xpm_file_to_image(g->mlx,
-			"img/Marvin.xpm", &g->P.w, &g->P.h);
+			"img/marvin_100.xpm", &g->P.w, &g->P.h);
 	g->P.addr = (int *)mlx_get_data_addr(g->P.p, &g->P.bpp,
 			&g->P.line, &g->P.endian);
 	g->C.p = mlx_xpm_file_to_image(g->mlx,
-			"img/petunias.xpm", &g->C.w, &g->C.h);
+			"img/towel.xpm", &g->C.w, &g->C.h);
 	g->C.addr = (int *)mlx_get_data_addr(g->C.p, &g->C.bpp,
 			&g->C.line, &g->C.endian);
 	g->E.p = mlx_xpm_file_to_image(g->mlx,
-			"img/heart_of_gold.xpm", &g->E.w, &g->E.h);
+			"img/hog.xpm", &g->E.w, &g->E.h);
 	g->E.addr = (int *)mlx_get_data_addr(g->E.p, &g->E.bpp,
 			&g->E.line, &g->E.endian);
 	// check for NULLs

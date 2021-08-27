@@ -35,7 +35,7 @@ int	main(int argc, char **argv)
 		display_err(clear_map(g.map.addr));
 	// mlx_destroy_image(g.mlx, g.floor.p); // Still not sure what this does!!
 	put_to_window(&g, -1, 1); // Displays everything
-    mlx_hook(g.win_p, X_BUTTON_EXIT, 0, &key_close, &g); // Segfaulting ????
+    mlx_hook(g.win_p, X_BUTTON_EXIT, 131072, &key_close, &g); // Segfaulting ????
 	mlx_key_hook(g.win_p, &key_press, &g); // REVIEW
 	// mlx_loop_hook(g.mlx, ft_render, &g); // for animation
 	mlx_loop(g.mlx); // Does anything happen bellow this line ???

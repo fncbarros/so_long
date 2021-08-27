@@ -20,8 +20,7 @@ static int ft_gameover(t_elements *g)
     if (g->map.C == -1)
     {
         mlx_clear_window(g->mlx, g->win_p);
-        // mlx_put_image_to_window(g->mlx, g->win_p, g->floor.p, 0, 0);
-        mlx_string_put(g->mlx, g->win_p, (g->win_w / 2) - 100, g->win_h / 3, 0xFF0000, "GAME     OVER!");
+        mlx_string_put(g->mlx, g->win_p, (g->win_w / 2) - 80, g->win_h / 3, 0xFF0000, "GAME     OVER!");
         clear_map(g->map.addr);
         g->map.C--;
     }
@@ -35,11 +34,11 @@ static void update_moves(t_elements *g, int i)
     char        *num;
 
     n += i;
-    printf("Movements: %d\ncollectibles: %d\n", n,g->map.C);
+    printf("Movements: %d\n", n);
     r = mlx_put_image_to_window(g->mlx, g->win_p, g->wall.p, 0, 0); // maybe somethn like check(mlx_put_image...)
     num = ft_itoa(n);
-    mlx_string_put(g->mlx, g->win_p, 100, 70, 0x0000FF, "Mov: ");
-    mlx_string_put(g->mlx, g->win_p, 120, 90, 0x0000FF, num);
+    mlx_string_put(g->mlx, g->win_p, 70, 30, 0x0000FF, "Mov: ");
+    mlx_string_put(g->mlx, g->win_p, 90, 50, 0x0000FF, num);
     free(num);
     if (!r)
         display_err(clear_map(g->map.addr)); // destroy images and window ????
@@ -77,7 +76,8 @@ int     key_press(int key, t_elements *g)
     char    *p;
 
     p = NULL;
-    if (key == KEY_ESC || key == X_BUTTON_EXIT) //esc key
+    printf("key = %d\n", key);
+    if (key == KEY_ESC) //esc key
     {
         mlx_destroy_window(g->mlx, g->win_p);
         if (g->map.C >= -1)
@@ -85,7 +85,10 @@ int     key_press(int key, t_elements *g)
         exit(0);
     }
     if (g->map.C <= -1)
+    {
+        printf("exit in key press2\n");
         return (ft_gameover(g));
+    }
     p = &g->map.addr[g->map.Py][g->map.Px];
     if (key == UP)
         ft_move(g, g->map.Py - 1, g->map.Px, p);
@@ -99,13 +102,16 @@ int     key_press(int key, t_elements *g)
 }
 
 
-int     key_close(int key, t_elements *g) 
+int     key_close(t_elements *g)
 /*top left corner red 'x'
     Segfaulting with any of both funtions for some reason*/
 {
-    (void)key;
-    clear_map(g->map.addr);
+
+    // mlx_destroy_window(g->mlx, g->win_p);
     mlx_destroy_window(g->mlx, g->win_p);
+    if (g->map.C >= -1)
+        clear_map(g->map.addr);
     exit(0);
-    // return (0);
+
+    return (0);
 }
