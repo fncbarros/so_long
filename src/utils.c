@@ -38,7 +38,6 @@ static void	init_data(t_data *obj)
 }
 
 void	*g_init(t_elements *g)
-/*Not sure*/
 {
 	g->win_p = NULL;
 	g->win_h = 0;
@@ -53,3 +52,17 @@ void	*g_init(t_elements *g)
 	init_data(&g->E);
 	return (NULL);
 }
+
+/*
+void	ft_close(t_elements *g)
+{
+		mlx_destroy_image(g->mlx, g->floor.p)
+		mlx_destroy_image(g->mlx, g->wall.p)
+		mlx_destroy_image(g->mlx, g->P.p)
+		mlx_destroy_image(g->mlx, g->C.p)
+		mlx_destroy_image(g->mlx, g->E.p)
+		mlx_destroy_window(g->mlx, g->win_p);
+		if (g->map.C >= -1)
+			clear_map(g->map.addr);
+		exit(0);
+}*/

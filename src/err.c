@@ -12,38 +12,6 @@
 
 #include "../inc/so_long.h"
 
-/*
-maybe somethn like check(mlx_put_image...) for failure checking
-
-void or int check(int i, t_elements *g)
-{
-    if (!i)
-    {
-        clear_everything;
-        exit
-    }
-}
-*/
-
-void	*malloc_n_check(size_t block, void *content, int flag)
-/*Not sure if useful
-flag in case there's memory to free*/
-{
-	void	*p;
-
-	p = ft_calloc(1, block);
-	if (!p)
-	{
-		if (flag)
-			return (NULL);
-		else
-			display_err(0);
-	}
-	if (content)
-		ft_memcpy(p, content, block);
-	return (p);
-}
-
 void	display_err(int num)
 
 {

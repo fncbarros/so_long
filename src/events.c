@@ -76,12 +76,7 @@ int	key_press(int key, t_elements *g)
 
 	p = NULL;
 	if (key == KEY_ESC)
-	{
-		mlx_destroy_window(g->mlx, g->win_p);
-		if (g->map.C >= -1)
-			clear_map(g->map.addr);
-		exit(0);
-	}
+		key_close(g);
 	if (g->map.C <= -1)
 		return (ft_gameover(g));
 	p = &g->map.addr[g->map.Py][g->map.Px];
@@ -98,6 +93,11 @@ int	key_press(int key, t_elements *g)
 
 int	key_close(t_elements *g)
 {
+	mlx_destroy_image(g->mlx, g->floor.p);
+	mlx_destroy_image(g->mlx, g->wall.p);
+	mlx_destroy_image(g->mlx, g->P.p);
+	mlx_destroy_image(g->mlx, g->C.p);
+	mlx_destroy_image(g->mlx, g->E.p);
 	mlx_destroy_window(g->mlx, g->win_p);
 	if (g->map.C >= -1)
 		clear_map(g->map.addr);

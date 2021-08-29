@@ -55,14 +55,12 @@ void	setup_game(t_elements *g)
 			&g->E.line, &g->E.endian);
 }
 
-int	put_to_window(t_elements *g, int j)
+void	put_to_window(t_elements *g, int j, int i)
 /*Scans map and displays every object. It should run everytime there's a specific event
 	i decides which line ro start printing from
 	Although it returns an int, mlx_put_image_to_window does not have
 	 a return value according to harm-smits*/
 {
-	int	i;
-
 	while (++j < g->map.rows)
 	{
 		i = -1;
@@ -72,10 +70,8 @@ int	put_to_window(t_elements *g, int j)
 				mlx_put_image_to_window(g->mlx,
 					g->win_p, g->wall.p, i * I_SIZE, j * I_SIZE);
 			else if (g->map.addr[j][i] == 'P')
-			{
 				mlx_put_image_to_window(g->mlx,
 					g->win_p, g->P.p, i * I_SIZE, j * I_SIZE);
-			}
 			else if (g->map.addr[j][i] == 'C')
 				mlx_put_image_to_window(g->mlx,
 					g->win_p, g->C.p, i * I_SIZE, j * I_SIZE);
@@ -89,5 +85,4 @@ int	put_to_window(t_elements *g, int j)
 			}
 		}
 	}
-	return (0);
 }

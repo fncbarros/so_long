@@ -45,8 +45,7 @@ static int	element_control(char c)
 }
 
 static void	further_check(t_map *m, int i)
-/*
- Checks if map is rectangular and outterbounds are filled with 1's.*/
+/*Checks if map is rectangular and outterbounds are filled with 1's.*/
 {
 	int			j;
 	static int	pe;
@@ -58,11 +57,8 @@ static void	further_check(t_map *m, int i)
 			display_err(clear_map(m->addr) + 5);
 		while (++j < m->rows)
 		{
-			if (i == 0 || i == (m->columns - 1))
-			{
-				if (m->addr[j][i] != '1')
-					display_err(clear_map(m->addr) + 5);
-			}
+			if ((i == 0 || i == (m->columns - 1)) && m->addr[j][i] != '1')
+				display_err(clear_map(m->addr) + 5);
 			pe = element_control(m->addr[j][i]);
 			if (pe < 69)
 				display_err(clear_map(m->addr) + pe);
@@ -71,8 +67,6 @@ static void	further_check(t_map *m, int i)
 				m->Px = i;
 				m->Py = j;
 			}
-			if (m->addr[j][i] == 'C')
-				m->C++;
 		}
 	}
 	if (pe != ('P' << 8) + 'E' || !m->C)
@@ -127,6 +121,8 @@ Malloc'ing empty line instead of setting to NULL <----------------------- FIXIT!
 		if (m->columns > 0 && r
 			&& ft_strlen(m->addr[m->rows]) != (size_t)m->columns)
 			r = -4;
+		if (ft_strchr(m->addr[m->rows], 'C'))
+			m->C++;
 	}
 	close(fd);
 	if (r < 0)

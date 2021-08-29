@@ -89,7 +89,7 @@ void	read_map(char *map, t_map *m);
 
 /*build.c*/
 void	setup_game(t_elements *g);
-int		put_to_window(t_elements *g, int i);
+void	put_to_window(t_elements *g, int j, int i);
 
 /*events.c*/
 int		key_close(t_elements *g); //red window button
