@@ -21,7 +21,7 @@ void	ft_img_pixel_put(t_data *img, int color, int x, int y)
 {
 	int	*dst;
 
-	dst = img->addr + ft_offset(x, y, *img); /*img->addr is an int *, that's why it's segfaulting*/
+	dst = img->addr + ft_offset(x, y, *img);
 	*(unsigned int *)dst = color;
 }
 
@@ -51,11 +51,5 @@ void	*g_init(t_elements *g)
 	init_data(&g->P);
 	init_data(&g->C);
 	init_data(&g->E);
-	return (NULL); //??
+	return (NULL);
 }
-/*
-void	*ft_reallocate()
-{
-
-}
-*/

@@ -23,8 +23,8 @@ static void	paint_floor(t_data *img, const int w, const int h, int color)
 }
 
 void	setup_game(t_elements *g)
-/*Need to remake floor, not the best aproach
-(l.:31-32) -Sets window size taking img sizes into account (all imgs I_SIZE x 			I_SIZE squares);
+/*Need to remaie floor, not the best aproach
+(l.:31-32) -Sets window size taiing img sizes into account (all imgs I_SIZE x 			I_SIZE squares);
 (l.:33-38) -Creates a window sized matte floor of color defined by Macro FLOOR;
 (l.:39-54) -Fetches imgs from img/ folder and "builds" them;
 */
@@ -53,62 +53,41 @@ void	setup_game(t_elements *g)
 			"img/hog.xpm", &g->E.w, &g->E.h);
 	g->E.addr = (int *)mlx_get_data_addr(g->E.p, &g->E.bpp,
 			&g->E.line, &g->E.endian);
-	// check for NULLs
 }
 
-// static void	*new_floor(t_elements *g)
-// /*REMAKE: New img pointer I_SIZE x I_SIZE for "patching up" floor or
-// 	Rebuild everything everytime there's a change*/
-// {
-// 	t_data	tmp;
-
-// 	tmp.p = mlx_new_image(g->mlx, I_SIZE, I_SIZE);
-// 	tmp.addr = (int *)mlx_get_data_addr(tmp.p,
-// 			&tmp.bpp, &tmp.line, &tmp.endian);
-// 	paint_floor(&tmp, I_SIZE, I_SIZE, FLOOR);
-// 	g->floor.h = I_SIZE;
-// 	g->floor.w = I_SIZE;
-// 	g->floor.addr = tmp.addr;
-// 	g->floor.line = tmp.line;
-// 	return (tmp.p);
-// }
-
-int	put_to_window(t_elements *g, int i, int ret)
+int	put_to_window(t_elements *g, int j)
 /*Scans map and displays every object. It should run everytime there's a specific event
-	i decides which line ro start printing from*/
+	i decides which line ro start printing from
+	Although it returns an int, mlx_put_image_to_window does not have
+	 a return value according to harm-smits*/
 {
-	int	j;
+	int	i;
 
-	while (++i < g->map.rows)
+	while (++j < g->map.rows)
 	{
-		j = -1;
-		while (++j < g->map.columns)
+		i = -1;
+		while (++i < g->map.columns)
 		{
-			if (g->map.addr[i][j] == '1')
-				ret = mlx_put_image_to_window(g->mlx,
-						g->win_p, g->wall.p, j * I_SIZE, i * I_SIZE);
-			else if (g->map.addr[i][j] == 'P')
+			if (g->map.addr[j][i] == '1')
+				mlx_put_image_to_window(g->mlx,
+					g->win_p, g->wall.p, i * I_SIZE, j * I_SIZE);
+			else if (g->map.addr[j][i] == 'P')
 			{
-				// if (g->map.C < 0)
-				// 	ret = mlx_put_image_to_window(g->mlx,
-				// 			g->win_p, g->E.p, j * I_SIZE, i * I_SIZE);
-				ret = mlx_put_image_to_window(g->mlx,
-						g->win_p, g->P.p, j * I_SIZE, i * I_SIZE);
+				mlx_put_image_to_window(g->mlx,
+					g->win_p, g->P.p, i * I_SIZE, j * I_SIZE);
 			}
-			else if (g->map.addr[i][j] == 'C')
-				ret = mlx_put_image_to_window(g->mlx,
-						g->win_p, g->C.p, j * I_SIZE, i * I_SIZE);
-			else if (g->map.addr[i][j] == 'E')
+			else if (g->map.addr[j][i] == 'C')
+				mlx_put_image_to_window(g->mlx,
+					g->win_p, g->C.p, i * I_SIZE, j * I_SIZE);
+			else if (g->map.addr[j][i] == 'E')
 			{
-				ret = mlx_put_image_to_window(g->mlx,
-						g->win_p, g->E.p, j * I_SIZE, i * I_SIZE);
-				if (g->map.Px == j && g->map.Py == i)
-					ret = mlx_put_image_to_window(g->mlx,
-						g->win_p, g->P.p, j * I_SIZE, i * I_SIZE);
+				mlx_put_image_to_window(g->mlx,
+					g->win_p, g->E.p, i * I_SIZE, j * I_SIZE);
+				if (g->map.Px == i && g->map.Py == j)
+					mlx_put_image_to_window(g->mlx,
+						g->win_p, g->P.p, i * I_SIZE, j * I_SIZE);
 			}
-			// if (!ret)
-				// display_err(clear_map(g->map.addr));
 		}
 	}
-	return (ret);
+	return (0);
 }

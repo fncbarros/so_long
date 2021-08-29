@@ -29,7 +29,7 @@ static int	element_control(char c)
 	{
 		pe ^= 'E';
 		if (!pe)
-			return(3);
+			return (3);
 	}
 	else if (c == 'P')
 	{
@@ -48,7 +48,7 @@ static void	further_check(t_map *m, int i)
 /*
  Checks if map is rectangular and outterbounds are filled with 1's.*/
 {
-	int	j;
+	int			j;
 	static int	pe;
 
 	while (++i < (m->columns))
@@ -66,7 +66,7 @@ static void	further_check(t_map *m, int i)
 			pe = element_control(m->addr[j][i]);
 			if (pe < 69)
 				display_err(clear_map(m->addr) + pe);
-			if (m->addr[j][i] == 'P') // Repeating yourself
+			if (m->addr[j][i] == 'P')
 			{
 				m->Px = i;
 				m->Py = j;
@@ -124,8 +124,8 @@ Malloc'ing empty line instead of setting to NULL <----------------------- FIXIT!
 		if (m->rows == 1)
 			m->columns = ft_strlen(m->addr[0]);
 		r = get_next_line(fd, &m->addr[m->rows]);
-		if (m->columns > 0 && r &&
-			ft_strlen(m->addr[m->rows]) != (size_t)m->columns)
+		if (m->columns > 0 && r
+			&& ft_strlen(m->addr[m->rows]) != (size_t)m->columns)
 			r = -4;
 	}
 	close(fd);
