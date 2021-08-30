@@ -99,6 +99,20 @@ Might be allocating one too many but it's working*/
 	return (tmp);
 }
 
+static int	ft_filetype(char *file, char *type)
+{
+	int	len;
+
+	len = ft_strlen(file);
+	len -= ft_strlen(type);
+	while (file[len] && *type)
+	{
+		if (file[len++] != *type++)
+			return (0);
+	}
+	return (1);
+}
+
 void	read_map(char *map, t_map *m)
 /*Stores map in 2d array char **addr; reallocs (sorta)
 All functions handle errors
@@ -110,7 +124,7 @@ Malloc'ing empty line instead of setting to NULL <----------------------- FIXIT!
 
 	r = 1;
 	fd = open(map, O_RDONLY);
-	if (fd < 0)
+	if (fd < 0 || !ft_filetype(map, ".ber"))
 		display_err(1);
 	while (r > 0)
 	{
